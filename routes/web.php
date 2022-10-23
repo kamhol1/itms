@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/tasks', [TaskController::class, 'index'])
+Route::get('/', [TaskController::class, 'index'])
+    ->middleware(['auth', 'verified'])
     ->name('tasks.index');
 
 Route::get('/tasks/{task_id}', [TaskController::class, 'show'])
     ->name('tasks.show');
 
-//Route::get('/', function () {
-//    return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', function () {
+    return view('tasks.index');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
