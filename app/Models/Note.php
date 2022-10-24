@@ -12,4 +12,9 @@ class Note extends Model
     protected $fillable = [
         'content'
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

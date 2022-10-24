@@ -21,8 +21,8 @@ Route::get('/', [TaskController::class, 'index'])
 Route::get('/tasks/{task_id}', [TaskController::class, 'show'])
     ->name('tasks.show');
 
-Route::get('/', function () {
-    return view('tasks.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/', function () {
+//    return view('tasks.index');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

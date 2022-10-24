@@ -13,11 +13,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-gray-100">
-    <nav class="p-6 bg-gray-100 flex justify-between mb-6">
+    <body class="font-sans antialiased bg-white">
+    <nav class="p-6 bg-white flex justify-between">
         <ul class="flex items-center">
             <li>
-                <a href="/" class="p-3">ITMS</a>
+                <a href="/">
+                    <x-application-logo class="!text-lg text-black" />
+                </a>
             </li>
         </ul>
 
@@ -48,7 +50,7 @@
         </ul>
     </nav>
 
-    <div class="m-5 flex bg-white p-5 rounded">
+    <div class="mb-5 ml-5 mr-5 flex bg-gray-100 p-5 rounded">
         {{ $slot }}
     </div>
 
