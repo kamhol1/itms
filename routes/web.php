@@ -18,7 +18,7 @@ Route::get('/', [TaskController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.index');
 
-Route::get('/tasks/{task_id}', [TaskController::class, 'show'])
+Route::get('/tasks/{task}', [TaskController::class, 'show'])
     ->name('tasks.show');
 
 //Route::get('/', function () {

@@ -14,7 +14,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('id', 'DESC')
+        $tasks = Task::with('category')
+            ->with('customer')
+            ->with('assignee')
+            ->orderBy('id', 'DESC')
             ->paginate(25);
 
         return view('tasks.index', [
@@ -49,9 +52,11 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        return view('tasks.show');
+        return view('tasks.show', [
+            'task' => $task
+        ]);
     }
 
     /**
