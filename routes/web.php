@@ -18,8 +18,15 @@ Route::get('/', [TaskController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.index');
 
+Route::get('/tasks/create', [TaskController::class, 'create'])
+    ->name('tasks.create');
+
+Route::post('/tasks', [TaskController::class, 'store'])
+    ->name('tasks.store');
+
 Route::get('/tasks/{task}', [TaskController::class, 'show'])
     ->name('tasks.show');
+
 
 //Route::get('/', function () {
 //    return view('tasks.index');

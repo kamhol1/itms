@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -32,7 +35,15 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $customers = Customer::all();
+        $users = User::all();
+
+        return view('tasks.create', [
+            'categories' => $categories,
+            'customers' => $customers,
+            'users' => $users
+        ]);
     }
 
     /**
