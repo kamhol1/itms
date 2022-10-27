@@ -10,7 +10,7 @@ class Task extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description'
+        'title', 'description', 'customer_id', 'category_id', 'priority', 'status', 'assignee_id', 'due_date'
     ];
 
     public function category()
@@ -25,7 +25,7 @@ class Task extends Model
 
     public function assignee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'assignee_id');
     }
 
     public function notes()

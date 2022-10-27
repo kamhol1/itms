@@ -54,7 +54,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formFields = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'nullable',
+            'customer_id' => 'nullable',
+            'category_id' => 'required',
+            'priority' => 'required',
+            'status' => 'nullable',
+            'assignee_id' => 'nullable',
+            'due_date' => 'nullable|date',
+        ]);
+
+        Task::create($formFields);
+
+        return redirect(route('tasks.index'));
     }
 
     /**
@@ -65,8 +78,15 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $categories = Category::all();
+        $customers = Customer::all();
+        $users = User::all();
+
         return view('tasks.show', [
-            'task' => $task
+            'task' => $task,
+            'categories' => $categories,
+            'customers' => $customers,
+            'users' => $users
         ]);
     }
 
