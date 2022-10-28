@@ -24,8 +24,14 @@ Route::get('/tasks/create', [TaskController::class, 'create'])
 Route::post('/tasks', [TaskController::class, 'store'])
     ->name('tasks.store');
 
+Route::post('/tasks', [TaskController::class, 'update'])
+    ->name('tasks.update');
+
 Route::get('/tasks/{task}', [TaskController::class, 'show'])
     ->name('tasks.show');
+
+Route::post('/notes', [NoteController::class, 'store'])
+    ->name('notes.store');
 
 
 //Route::get('/', function () {

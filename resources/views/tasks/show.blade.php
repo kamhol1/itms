@@ -1,8 +1,9 @@
 <x-app-layout>
     <div>
         <div class="bg-white p-12 rounded-sm">
-            <form action="{{ route('tasks.store') }}" method="POST">
+            <form action="{{ route('tasks.update') }}" method="POST">
                 @csrf
+                @method('PUT')
 
                 <div class="mb-6">
                     <label for="id">Task ID:</label><br/>
@@ -107,13 +108,14 @@
     </div>
 
 
-    <div class="content-center bg-white w-full p-12 rounded-sm ml-1">
+    <div class="content-center bg-white w-full p-12 rounded-sm flex flex-col">
         <h1 class="text-2xl pb-4">Notes:</h1>
 
         @unless(count($notes) == 0)
-        <table class="min-w-full bg-white">
+        <table class="min-w-full bg-white mb-12">
             <thead class="bg-black text-white">
             <tr>
+                <th class="uppercase font-semibold text-sm"></th>
                 <th class="w-2/4 py-3 px-4 uppercase font-semibold text-sm">Content</th>
                 <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Author</th>
                 <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Created</th>
@@ -122,10 +124,18 @@
 
             <tbody class="border-b border-gray-300">
             @foreach($notes as $note)
-                <tr class="even:bg-gray-200 clickable-row hover:bg-gray-300 hover:cursor-pointer" onclick="window.location.href='{{ route('tasks.show', $task->id) }}'">
-                    <td class="p-1 border-x border-gray-300">{{ $note->content }}</td>
+                <tr class="even:bg-gray-200 hover:bg-gray-300">
+                    <td class="p-1 border-l border-gray-300">
+                        @if($note->user_id == auth()->user()->id)
+                            <a href="#">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        @endif
+                    </td>
+                    <td class="p-1">{{ $note->content }}</td>
                     <td class="p-1 border-x border-gray-300">{{ $note->user->name }}</td>
                     <td class="p-1 border-x border-gray-300">{{ date("H:i:s d-m-Y", strtotime($note->created_at)) }}</td>
+
                 </tr>
             @endforeach
             </tbody>
@@ -133,6 +143,22 @@
         @else
             <p>No notes to show</p>
         @endunless
+
+        <div class="mt-auto">
+            <h1 class="text-2xl pb-4">New note:</h1>
+
+            <form action="{{ route('notes.store') }}" method="POST">
+                @csrf
+
+                <textarea class="w-full" rows="3"></textarea>
+
+                <button type="submit" class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                    Add
+                </button>
+            </form>
+        </div>
     </div>
 
 </x-app-layout>
+
+{{--max-w-0 truncate text-ellipsis--}}

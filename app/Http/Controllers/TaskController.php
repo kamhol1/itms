@@ -83,6 +83,7 @@ class TaskController extends Controller
         $users = User::all();
         $statuses = ['assigned', 'in progress', 'pending', 'closed'];
         $notes = Note::where('task_id', $task->id)
+            ->orderBy('id','desc')
             ->get();
 
         return view('tasks.show', [
