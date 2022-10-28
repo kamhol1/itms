@@ -1,10 +1,13 @@
 <x-app-layout>
     <div>
-        <h1 class="text-3xl text-black pb-8">Task no. {{ $task->id }}</h1>
-
         <div class="bg-white p-12 rounded-sm">
             <form action="{{ route('tasks.store') }}" method="POST">
                 @csrf
+
+                <div class="mb-6">
+                    <label for="id">Task ID:</label><br/>
+                    <input type="text" name="id" size="30" id="id" disabled value="{{ $task->id }}" class="p-1">
+                </div>
 
                 <div class="mb-6">
                     <label for="title">Title:</label><br/>
@@ -104,7 +107,7 @@
     </div>
 
 
-    <div class="content-center bg-white w-full p-12 rounded-sm mx-2 mt-[68px]">
+    <div class="content-center bg-white w-full p-12 rounded-sm ml-1">
         <h1 class="text-2xl pb-4">Notes:</h1>
 
         @unless(count($notes) == 0)
