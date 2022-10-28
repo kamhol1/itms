@@ -130,8 +130,8 @@
             </nav>
         </header>
 
-        <div class="w-full overflow-x-hidden border-t flex flex-col">
-            <main class="w-full flex flex-row p-6">
+        <div class="w-full overflow-x-hidden border-t">
+            <main class="w-full lg:flex p-6">
                 {{ $slot }}
             </main>
         </div>

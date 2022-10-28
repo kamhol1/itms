@@ -2,13 +2,13 @@
     <div>
         <h1 class="text-3xl text-black pb-8">Task no. {{ $task->id }}</h1>
 
-        <div class="content-center bg-white w-min p-12 rounded-sm">
+        <div class="bg-white p-12 rounded-sm">
             <form action="{{ route('tasks.store') }}" method="POST">
                 @csrf
 
                 <div class="mb-6">
                     <label for="title">Title:</label><br/>
-                    <input type="text" name="title" size="50" id="title" value="{{ $task->title }}" class="p-1">
+                    <input type="text" name="title" size="30" id="title" value="{{ $task->title }}" class="p-1">
                     @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                     @enderror
@@ -16,7 +16,7 @@
 
                 <div class="mb-6">
                     <label for="description">Description:</label><br/>
-                    <textarea name="description" id="description" class="p-1" cols="50" rows="4">{{ $task->description }}</textarea>
+                    <textarea name="description" id="description" class="p-1" cols="30" rows="4">{{ $task->description }}</textarea>
                 </div>
 
                 <div class="mb-6">
@@ -73,6 +73,20 @@
                 </div>
 
                 <div class="mb-6">
+                    <label for="assignee_id">Status:</label><br/>
+                    <select name="assignee_id" id="assignee_id" class="py-1">
+                        <option value>-</option>
+                        @foreach($statuses as $status)
+                            @if($task->status != $status)
+                                <option value="{{ $status }}">{{ ucfirst($status) }}</option>
+                            @else
+                                <option selected value="{{ $status }}">{{ ucfirst($status) }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-6">
                     <label for="due_date">Due date:</label><br/>
                     <input type="date" name="due_date" id="due_date" class="p-1" value="{{ $task->due_date }}">
                     @error('due_date')
@@ -81,8 +95,8 @@
                 </div>
 
                 <div class="flex items-center">
-                    <button type="submit" class="m-auto mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                        Create Task
+                    <button type="submit" class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        Save
                     </button>
                 </div>
             </form>
@@ -90,10 +104,32 @@
     </div>
 
 
-    <div class="content-center bg-white w-min p-12 rounded-sm mx-2 mt-[68px]">
-        <div>01</div>
-        <div>02</div>
-        <div>03</div>
+    <div class="content-center bg-white w-full p-12 rounded-sm mx-2 mt-[68px]">
+        <h1 class="text-2xl pb-4">Notes:</h1>
+
+        @unless(count($notes) == 0)
+        <table class="min-w-full bg-white">
+            <thead class="bg-black text-white">
+            <tr>
+                <th class="w-2/4 py-3 px-4 uppercase font-semibold text-sm">Content</th>
+                <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Author</th>
+                <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Created</th>
+            </tr>
+            </thead>
+
+            <tbody class="border-b border-gray-300">
+            @foreach($notes as $note)
+                <tr class="even:bg-gray-200 clickable-row hover:bg-gray-300 hover:cursor-pointer" onclick="window.location.href='{{ route('tasks.show', $task->id) }}'">
+                    <td class="p-1 border-x border-gray-300">{{ $note->content }}</td>
+                    <td class="p-1 border-x border-gray-300">{{ $note->user->name }}</td>
+                    <td class="p-1 border-x border-gray-300">{{ date("H:i:s d-m-Y", strtotime($note->created_at)) }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+        @else
+            <p>No notes to show</p>
+        @endunless
     </div>
 
 </x-app-layout>

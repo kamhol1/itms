@@ -17,9 +17,9 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="border-b border-gray-300">
                     @foreach($tasks as $task)
-                        <tr class="odd:bg-gray-200 clickable-row hover:bg-gray-300 hover:cursor-pointer" onclick="window.location.href='{{ route('tasks.show', $task->id) }}'">
+                        <tr class="even:bg-gray-200 clickable-row hover:bg-gray-300 hover:cursor-pointer" onclick="window.location.href='{{ route('tasks.show', $task->id) }}'">
                             <td class="p-1 border-x border-gray-300">{{ $task->id }}</td>
                             <td class="p-1 border-x border-gray-300">{{ $task->title }}</td>
                             <td class="p-1 border-x border-gray-300">{{ $task->category->name }}</td>
