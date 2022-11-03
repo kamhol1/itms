@@ -22,4 +22,11 @@ class Note extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeTaskNotes($query, int $id)
+    {
+        return $query->where('task_id', $id)
+            ->orderBy('id','desc')
+            ->get();
+    }
 }

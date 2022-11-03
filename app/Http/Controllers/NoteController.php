@@ -8,7 +8,7 @@ class NoteController extends Controller
 {
     public function index()
     {
-        //
+
     }
 
     public function create()
