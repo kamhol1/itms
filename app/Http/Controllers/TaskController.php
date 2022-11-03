@@ -11,11 +11,6 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $tasks = Task::with('category')
@@ -29,11 +24,6 @@ class TaskController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::all();
@@ -47,12 +37,6 @@ class TaskController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $formFields = $request->validate([
@@ -70,18 +54,13 @@ class TaskController extends Controller
         return redirect(route('tasks.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Task $task)
     {
         $categories = Category::all();
         $customers = Customer::all();
         $users = User::all();
         $statuses = ['assigned', 'in progress', 'pending', 'closed'];
+        $priorityLevels = ['low', 'medium', 'high'];
         $notes = Note::where('task_id', $task->id)
             ->orderBy('id','desc')
             ->get();
@@ -92,41 +71,46 @@ class TaskController extends Controller
             'customers' => $customers,
             'users' => $users,
             'statuses' => $statuses,
+            'priorityLevels' => $priorityLevels,
             'notes' => $notes
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        if ($task->assignee_id != auth()->user()->id && $task->assignee_id != null && !auth()->user()->isAdmin()) {
+            abort(403, 'Unauthorized action');
+        }
+
+        $formFields = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'nullable',
+            'customer_id' => 'nullable',
+            'category_id' => 'required',
+            'priority' => 'required',
+            'status' => 'nullable',
+            'assignee_id' => 'nullable',
+            'due_date' => 'nullable|date',
+        ]);
+
+        $task->update($formFields);
+
+        return redirect(route('tasks.show', $task->id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Unauthorized action');
+        }
+
+        $task->delete();
+
+        return redirect(route('tasks.index'));
     }
 }

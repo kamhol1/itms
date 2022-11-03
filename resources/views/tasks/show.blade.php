@@ -1,7 +1,7 @@
 <x-app-layout>
     <div>
         <div class="bg-white p-12 rounded-sm">
-            <form action="{{ route('tasks.update') }}" method="POST">
+            <form action="{{ route('tasks.update', $task->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -56,9 +56,13 @@
                 <div class="mb-6">
                     <label for="priority">Priority:</label><br/>
                     <select name="priority" id="priority" required class="py-1">
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
+                        @foreach($priorityLevels as $priority)
+                            @if($task->priority != $priority)
+                                <option value="{{ $priority }}">{{ ucfirst($priority) }}</option>
+                            @else
+                                <option selected value="{{ $priority }}">{{ ucfirst($priority) }}</option>
+                            @endif
+                        @endforeach
                     </select>
                 </div>
 
@@ -77,8 +81,8 @@
                 </div>
 
                 <div class="mb-6">
-                    <label for="assignee_id">Status:</label><br/>
-                    <select name="assignee_id" id="assignee_id" class="py-1">
+                    <label for="status">Status:</label><br/>
+                    <select name="status" id="status" class="py-1">
                         <option value>-</option>
                         @foreach($statuses as $status)
                             @if($task->status != $status)
@@ -98,15 +102,25 @@
                     @enderror
                 </div>
 
-                <div class="flex items-center">
-                    <button type="submit" class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                        Save
-                    </button>
-                </div>
+                <button type="submit" {{ ($task->assignee_id != auth()->user()->id && $task->assignee_id != null && !auth()->user()->isAdmin()) ? 'disabled' : '' }}
+                    class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                    Save
+                </button>
             </form>
+
+            @if(auth()->user()->isAdmin())
+                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+
+                    <button onclick="return confirm('Are you sure you want to delete this task?');" type="submit"
+                        class="mt-4 px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        Delete Task
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
-
 
     <div class="content-center bg-white w-full p-12 rounded-sm flex flex-col">
         <h1 class="text-2xl pb-4">Notes:</h1>
