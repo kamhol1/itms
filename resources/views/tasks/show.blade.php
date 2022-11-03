@@ -102,23 +102,23 @@
                     @enderror
                 </div>
 
-                <button type="submit" {{ ($task->assignee_id != auth()->user()->id && $task->assignee_id != null && !auth()->user()->isAdmin()) ? 'disabled' : '' }}
+                <button type="submit" @cannot('edit', $task) disabled @endcannot
                     class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                     Save
                 </button>
             </form>
 
-            @if(auth()->user()->isAdmin())
+            @can('delete', $task)
                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
 
-                    <button onclick="return confirm('Are you sure you want to delete this task?');" type="submit"
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this Task?');"
                         class="mt-4 px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                         Delete Task
                     </button>
                 </form>
-            @endif
+            @endcan
         </div>
     </div>
 

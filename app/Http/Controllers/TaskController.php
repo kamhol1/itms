@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    private const LIMIT_DEFAULT = 25;
+
     public function index()
     {
         $tasks = Task::with('category')
             ->with('customer')
             ->with('assignee')
             ->orderBy('id', 'DESC')
-            ->paginate(25);
+            ->paginate(self::LIMIT_DEFAULT);
 
         return view('tasks.index', [
             'tasks' => $tasks
@@ -83,9 +85,7 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        if ($task->assignee_id != auth()->user()->id && $task->assignee_id != null && !auth()->user()->isAdmin()) {
-            abort(403, 'Unauthorized action');
-        }
+        $this->authorize('edit', $task);
 
         $formFields = $request->validate([
             'title' => 'required|max:255',
@@ -105,9 +105,7 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        if (!auth()->user()->isAdmin()) {
-            abort(403, 'Unauthorized action');
-        }
+        $this->authorize('delete', $task);
 
         $task->delete();
 
