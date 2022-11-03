@@ -32,6 +32,10 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <br/>
+            {{ $tasks->links() }}
+
         @else
             <p>No tasks to show</p>
         @endunless
