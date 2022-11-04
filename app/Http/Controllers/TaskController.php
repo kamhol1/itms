@@ -58,21 +58,30 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
+        $notes = Note::TaskNotes($task->id);
         $categories = Category::all();
         $customers = Customer::all();
         $users = User::all();
-        $statuses = ['assigned', 'in progress', 'pending', 'closed'];
-        $priorityLevels = ['low', 'medium', 'high'];
-        $notes = Note::TaskNotes($task->id);
+        $statuses = [
+            'assigned',
+            'in progress',
+            'pending',
+            'closed'
+        ];
+        $priorityLevels = [
+            'low',
+            'medium',
+            'high'
+        ];
 
         return view('tasks.show', [
             'task' => $task,
+            'notes' => $notes,
             'categories' => $categories,
             'customers' => $customers,
             'users' => $users,
             'statuses' => $statuses,
-            'priorityLevels' => $priorityLevels,
-            'notes' => $notes
+            'priorityLevels' => $priorityLevels
         ]);
     }
 
