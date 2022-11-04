@@ -36,8 +36,19 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
 Route::get('/tasks/{task}', [TaskController::class, 'show'])
     ->name('tasks.show');
 
+
+
 Route::post('/notes', [NoteController::class, 'store'])
     ->name('notes.store');
+
+Route::put('/notes/{note}/edit', [NoteController::class, 'update'])
+    ->name('notes.update');
+
+Route::delete('/notes/{note}', [NoteController::class, 'destroy'])
+    ->name('notes.destroy');
+
+Route::get('/notes/{note}', [NoteController::class, 'show'])
+    ->name('notes.show');
 
 
 //Route::get('/', function () {

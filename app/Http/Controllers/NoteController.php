@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -16,14 +18,24 @@ class NoteController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Task $task)
     {
+        $formFields = $request->validate([
+            'content' => 'required',
+            'task_id' => 'required',
+            'user_id' => 'required'
+        ]);
 
+        Note::create($formFields);
+
+        return back();
     }
 
-    public function show($id)
+    public function show(Note $note)
     {
-        //
+        return view('notes.show', [
+            'note' => $note
+        ]);
     }
 
     public function edit($id)
@@ -31,13 +43,25 @@ class NoteController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Note $note)
     {
-        //
+        $this->authorize('edit', $note);
+
+        $formFields = $request->validate([
+            'content' => 'required',
+        ]);
+
+        $note->update($formFields);
+
+        return redirect(route('tasks.show', $note->task->id));
     }
 
-    public function destroy($id)
+    public function destroy(Note $note)
     {
-        //
+        $this->authorize('delete', $note);
+
+        $note->delete();
+
+        return redirect(route('tasks.show', $note->task->id));
     }
 }

@@ -10,7 +10,7 @@ class Note extends Model
     use HasFactory;
 
     protected $fillable = [
-        'content'
+        'content', 'task_id', 'user_id'
     ];
 
     public function task()
