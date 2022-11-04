@@ -25,7 +25,9 @@ class Note extends Model
 
     public function scopeTaskNotes($query, int $id)
     {
-        return $query->where('task_id', $id)
+        return $query->with('user')
+            ->with('task')
+            ->where('task_id', $id)
             ->orderBy('id','desc')
             ->get();
     }
