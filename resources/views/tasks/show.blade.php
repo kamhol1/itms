@@ -142,7 +142,7 @@
 
         <div class="overflow-auto">
             @unless(count($notes) == 0)
-                <table class="min-w-full bg-white mb-12">
+                <table class="min-w-full bg-white mb-4">
                     <thead class="bg-black text-white">
                     <tr>
                         <th class="w-9/12 py-3 px-4 uppercase font-semibold text-sm">Content</th>
@@ -162,6 +162,8 @@
                     @endforeach
                     </tbody>
                 </table>
+
+                {{ $notes->links() }}
             @else
                 <p>No notes to show</p>
             @endunless

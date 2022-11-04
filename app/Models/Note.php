@@ -9,6 +9,8 @@ class Note extends Model
 {
     use HasFactory;
 
+    public const LIMIT_DEFAULT = 50;
+
     protected $fillable = [
         'content', 'task_id', 'user_id'
     ];
@@ -29,6 +31,6 @@ class Note extends Model
             ->with('task')
             ->where('task_id', $id)
             ->orderBy('id','desc')
-            ->get();
+            ->paginate(self::LIMIT_DEFAULT);
     }
 }

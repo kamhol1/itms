@@ -9,6 +9,8 @@ class Task extends Model
 {
     use HasFactory;
 
+    public const LIMIT_DEFAULT = 25;
+
     protected $fillable = [
         'title', 'description', 'customer_id', 'category_id', 'priority', 'status', 'assignee_id', 'due_date'
     ];

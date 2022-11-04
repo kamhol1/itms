@@ -11,15 +11,13 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    private const LIMIT_DEFAULT = 25;
-
     public function index()
     {
         $tasks = Task::with('category')
             ->with('customer')
             ->with('assignee')
             ->orderBy('id', 'DESC')
-            ->paginate(self::LIMIT_DEFAULT);
+            ->paginate(Task::LIMIT_DEFAULT);
 
         return view('tasks.index', [
             'tasks' => $tasks
