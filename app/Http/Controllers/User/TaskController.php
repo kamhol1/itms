@@ -18,9 +18,9 @@ class TaskController extends Controller
             ->with('assignee')
             ->where('assignee_id', $user->id)
             ->orderBy('id', 'DESC')
-            ->paginate(Task::LIMIT_DEFAULT);
+            ->paginate(Task::PAGE_SIZE_DEFAULT);
 
-        return view('user.posts.index', [
+        return view('user.tasks.index', [
             'tasks' => $tasks
         ]);
     }

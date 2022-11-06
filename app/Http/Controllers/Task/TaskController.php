@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $tasks = Task::with('category')
             ->with('customer')
             ->with('assignee')
-            ->orderBy('id', 'DESC')
-            ->paginate(Task::LIMIT_DEFAULT);
+            ->orderBy($request->sort_by ?? 'id', $request->sort_order ?? 'desc')
+            ->paginate(Task::PAGE_SIZE_DEFAULT);
 
         return view('tasks.index', [
             'tasks' => $tasks

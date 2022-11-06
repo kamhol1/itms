@@ -4,23 +4,19 @@
 
         @unless(count($tasks) == 0)
             <div class="bg-white p-4 rounded-sm mb-10">
-                <form action="" method="POST">
+                <form action="{{ route('tasks.index') }}" method="GET">
                     <div class="mb-2">
                         <div class="font-bold">Sort by:</div>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="id"> ID</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="title"> Title</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="category"> Category</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="customer"> Customer</label>
+                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="id" {{ old('sort_by') == 'id' ? 'checked' : '' }}> ID</label>
                         <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="priority"> Priority</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="assignee"> Assignee</label>
                         <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="status"> Status</label>
                         <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="due_date"> Due date</label>
                     </div>
 
                     <div class="mb-2">
                         <div class="font-bold">Sort order:</div>
-                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="title"> Ascending</label>
-                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="title"> Descending</label>
+                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="asc"> Ascending</label>
+                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="desc"> Descending</label>
                     </div>
 
                     <div class="mb-2">
