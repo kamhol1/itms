@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\NoteController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Note\NoteController;
+use App\Http\Controllers\Task\TaskController;
+use App\Http\Controllers\User\TaskController as UserTaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +51,10 @@ Route::delete('/notes/{note}', [NoteController::class, 'destroy'])
 Route::get('/notes/{note}', [NoteController::class, 'show'])
     ->name('notes.show');
 
+
+
+Route::get('/user/tasks', [UserTaskController::class, 'index'])
+    ->name('user.tasks.index');
 
 //Route::get('/', function () {
 //    return view('tasks.index');

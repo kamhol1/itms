@@ -35,35 +35,48 @@
         <nav class="text-white text-base font-semibold pt-3">
             <a href="{{ route('tasks.index') }}" class="flex items-center text-white py-4 pl-6 nav-item">
                 <i class="fas fa-list mr-3"></i>
-                Tasks
+                All Tasks
+            </a>
+            <a href="{{ route('user.tasks.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-chalkboard-user mr-3"></i>
+                My Tasks
             </a>
             <a href="{{ route('tasks.create') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-plus mr-3"></i>
                 New Task
             </a>
-            <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-table mr-3"></i>
-                Tables
-            </a>
-            <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-align-left mr-3"></i>
-                Forms
-            </a>
-            <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-tablet-alt mr-3"></i>
-                Tabbed Content
-            </a>
-            <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-calendar mr-3"></i>
-                Calendar
-            </a>
+{{--            <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
+{{--                <i class="fas fa-table mr-3"></i>--}}
+{{--                Tables--}}
+{{--            </a>--}}
+{{--            <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
+{{--                <i class="fas fa-align-left mr-3"></i>--}}
+{{--                Forms--}}
+{{--            </a>--}}
+{{--            <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
+{{--                <i class="fas fa-tablet-alt mr-3"></i>--}}
+{{--                Tabbed Content--}}
+{{--            </a>--}}
+{{--            <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
+{{--                <i class="fas fa-calendar mr-3"></i>--}}
+{{--                Calendar--}}
+{{--            </a>--}}
         </nav>
     </aside>
 
     <div class="w-full flex flex-col h-screen overflow-y-hidden">
         <!-- Desktop Header -->
         <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
-            <div class="w-1/2"></div>
+            <div class="w-1/2">
+                <form action="" method="POST">
+                    @csrf
+
+                    <input type="text" name="search" id="search" class="rounded-l-full" placeholder="Search for Tasks...">
+                    <button type="submit" class="absolute rounded-r-full border-[#6b7280] border border-l-0 py-2 px-3 bg-black button">
+                        <i class="fas fa-search text-white"></i>
+                    </button>
+                </form>
+            </div>
             <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
                 <p class="my-auto mx-2">{{ auth()->user()->name }}</p>
                 <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-2 hover:border-gray-300 focus:border-gray-300 focus:outline-none">

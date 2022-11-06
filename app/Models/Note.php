@@ -9,7 +9,7 @@ class Note extends Model
 {
     use HasFactory;
 
-    public const LIMIT_DEFAULT = 50;
+    public const LIMIT_DEFAULT = 25;
 
     protected $fillable = [
         'content', 'task_id', 'user_id'
