@@ -2,30 +2,37 @@
     <div class="content-center w-full rounded-sm flex flex-col">
         <h1 class="text-3xl text-black pb-8">All Tasks</h1>
 
-        @unless(count($tasks) == 0)
             <div class="bg-white p-4 rounded-sm mb-10">
                 <form action="{{ route('tasks.index') }}" method="GET">
+                    <label for="phrase">Search: </label>
+                    <input type="search" name="phrase" id="phrase" class="rounded-full m-2" value="{{ $phrase ?? '' }}" placeholder="Search for Tasks...">
+
                     <div class="mb-2">
                         <div class="font-bold">Sort by:</div>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="id" {{ old('sort_by') == 'id' ? 'checked' : '' }}> ID</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="priority"> Priority</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="status"> Status</label>
-                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="due_date"> Due date</label>
+                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="id" @if ($sortBy == 'id') checked @endif> ID</label>
+                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="priority" @if ($sortBy == 'priority') checked @endif> Priority</label>
+                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="status" @if ($sortBy == 'status') checked @endif> Status</label>
+                        <label for="sort_by" class="pr-2"><input type="radio" name="sort_by" value="due_date" @if ($sortBy == 'due_date') checked @endif> Due date</label>
                     </div>
 
                     <div class="mb-2">
                         <div class="font-bold">Sort order:</div>
-                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="asc"> Ascending</label>
-                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="desc"> Descending</label>
+                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="asc" @if ($sortOrder == 'asc') checked @endif> Ascending</label>
+                        <label for="sort_order" class="pr-2"><input type="radio" name="sort_order" value="desc" @if ($sortOrder == 'desc') checked @endif> Descending</label>
                     </div>
 
                     <div class="mb-2">
                         <div class="font-bold">Tasks per page:</div>
-                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="5"> 5</label>
-                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="10"> 10</label>
-                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="25"> 25</label>
-                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="50"> 50</label>
-                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="100"> 100</label>
+                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="5" @if ($pageSize == '5') checked @endif> 5</label>
+                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="10" @if ($pageSize == '10') checked @endif> 10</label>
+                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="25" @if ($pageSize == '25') checked @endif> 25</label>
+                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="50" @if ($pageSize == '50') checked @endif> 50</label>
+                        <label for="page_size" class="pr-2"><input type="radio" name="page_size" value="100" @if ($pageSize == '100') checked @endif> 100</label>
+                    </div>
+
+                    <div class="mb-2 mt-5">
+                        <input type="checkbox" name="show_closed" @if ($showClosed == 'on') checked @endif>
+                        <label for="show_closed"> Show closed Tasks</label>
                     </div>
 
                     <div class="mb-2">
@@ -36,6 +43,7 @@
                 </form>
             </div>
 
+        @unless(count($tasks) == 0)
             <table class="min-w-full bg-white">
                 <thead class="bg-black text-white">
                     <tr>

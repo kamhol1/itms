@@ -11,14 +11,16 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-
         $tasks = Task::with('category')
             ->with('customer')
             ->with('assignee')
-            ->where('assignee_id', $user->id)
+            ->where('assignee_id', auth()->user()->id)
+            ->where(function ($query) {
+                $query->where('status', '!=', 'closed')
+                ->orWhereNull('status');
+            })
             ->orderBy('id', 'DESC')
-            ->paginate(Task::PAGE_SIZE_DEFAULT);
+            ->paginate(Task::PAGE_SIZE);
 
         return view('user.tasks.index', [
             'tasks' => $tasks

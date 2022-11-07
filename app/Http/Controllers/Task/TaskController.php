@@ -14,14 +14,51 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $tasks = Task::with('category')
-            ->with('customer')
-            ->with('assignee')
-            ->orderBy($request->sort_by ?? 'id', $request->sort_order ?? 'desc')
-            ->paginate(Task::PAGE_SIZE_DEFAULT);
+        $phrase = $request->get('phrase') ?? '';
+        $sortBy = $request->get('sort_by') ?? 'id';
+        $sortOrder = $request->get('sort_order') ?? 'desc';
+        $pageSize = $request->get('page_size') ?? Task::PAGE_SIZE;
+        $showClosed = $request->get('show_closed');
+
+        if ($showClosed) {
+            $tasks = Task::with('category')
+                ->with('customer')
+                ->with('assignee')
+                ->orderBy($sortBy ?? 'id', $sortOrder ?? 'desc')
+                ->search($phrase)
+                ->paginate($pageSize)
+                ->appends([
+                    'phrase' => $phrase,
+                    'sort_by' => $sortBy,
+                    'sort_order' => $sortOrder,
+                    'page_size' => $pageSize,
+                    'show_closed' => $showClosed
+                ]);
+        } else {
+            $tasks = Task::with('category')
+                ->with('customer')
+                ->with('assignee')
+                ->where('status', '!=', 'closed')
+                ->orWhereNull('status')
+                ->orderBy($sortBy ?? 'id', $sortOrder ?? 'desc')
+                ->search($phrase)
+                ->paginate($pageSize)
+                ->appends([
+                    'phrase' => $phrase,
+                    'sort_by' => $sortBy,
+                    'sort_order' => $sortOrder,
+                    'page_size' => $pageSize,
+                    'show_closed' => $showClosed
+                ]);
+        }
 
         return view('tasks.index', [
-            'tasks' => $tasks
+            'phrase' => $phrase,
+            'tasks' => $tasks,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
+            'pageSize' => $pageSize,
+            'showClosed' => $showClosed
         ]);
     }
 

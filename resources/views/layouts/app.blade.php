@@ -68,12 +68,6 @@
         <!-- Desktop Header -->
         <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
             <div class="w-1/2">
-                <form action="{{ route('tasks.index') }}" method="GET">
-                    <input type="text" name="search" id="search" class="rounded-l-full" placeholder="Search for Tasks...">
-                    <button type="submit" class="absolute rounded-r-full border-[#6b7280] border border-l-0 py-2 px-3 bg-black button">
-                        <i class="fas fa-search text-white"></i>
-                    </button>
-                </form>
             </div>
             <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
                 <p class="my-auto mx-2">{{ auth()->user()->name }}</p>

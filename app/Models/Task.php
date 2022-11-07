@@ -9,7 +9,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    public const PAGE_SIZE_DEFAULT = 25;
+    public const PAGE_SIZE = 25;
 
     protected $fillable = [
         'title', 'description', 'customer_id', 'category_id', 'priority', 'status', 'assignee_id', 'due_date'
@@ -33,5 +33,12 @@ class Task extends Model
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function scopeSearch($query, string $phrase) {
+        if ($phrase ?? false) {
+            $query->where('title', 'like', '%' . request('phrase') . '%');
+//                ->orWhere('description', 'like', '%' . request('phrase') . '%');
+        }
     }
 }
