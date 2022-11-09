@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Note\NoteController;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\User\TaskController as UserTaskController;
@@ -16,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::resource('tasks', TaskController::class);
+
 Route::get('/', [TaskController::class, 'index'])
     ->name('tasks.index')
     ->middleware(['auth', 'verified']);
-
-//Route::resource('tasks', TaskController::class);
 
 Route::get('/tasks/create', [TaskController::class, 'create'])
     ->name('tasks.create');
@@ -55,6 +56,17 @@ Route::get('/notes/{note}', [NoteController::class, 'show'])
 
 Route::get('/user/tasks', [UserTaskController::class, 'index'])
     ->name('user.tasks.index');
+
+
+
+Route::get('/admin/customers', [AdminController::class, 'customers'])
+    ->name('admin.customers');
+
+Route::get('/admin/categories', [AdminController::class, 'categories'])
+    ->name('admin.categories');
+
+Route::get('/admin/users', [AdminController::class, 'users'])
+    ->name('admin.users');
 
 //Route::get('/', function () {
 //    return view('tasks.index');

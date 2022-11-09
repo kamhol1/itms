@@ -33,7 +33,7 @@
             <a href="/"><x-application-logo class="px-1 !text-white" /></a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
-            <a href="{{ route('tasks.index') }}" class="flex items-center text-white py-4 pl-6 nav-item">
+            <a href="{{ route('tasks.index') }}" class="flex items-center text-white opacity-75 py-4 pl-6 nav-item">
                 <i class="fas fa-list mr-3"></i>
                 All Tasks
             </a>
@@ -45,6 +45,22 @@
                 <i class="fas fa-plus mr-3"></i>
                 New Task
             </a>
+            @if(auth()->user()->admin == 1)
+                <h1 class=" text-white opacity-75 mt-16 mb-4 flex justify-center">ADMIN OPTIONS</h1>
+
+                <a href="{{ route('admin.customers') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-tools mr-3"></i>
+                    Customers
+                </a>
+                <a href="{{ route('admin.categories') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-tools mr-3"></i>
+                    Categories
+                </a>
+                <a href="{{ route('admin.users') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-tools mr-3"></i>
+                    Users
+                </a>
+            @endif
 {{--            <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
 {{--                <i class="fas fa-table mr-3"></i>--}}
 {{--                Tables--}}
