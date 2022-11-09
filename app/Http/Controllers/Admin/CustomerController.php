@@ -35,13 +35,22 @@ class CustomerController extends Controller
         return redirect(route('admin.customers.index'));
     }
 
-    public function update()
+    public function update(Request $request, Customer $customer)
     {
+        $formFields = $request->validate([
+            'name' => 'required|max:255',
+            'phone' => 'nullable',
+            'email' => 'nullable|email'
+        ]);
 
+        $customer->update($formFields);
+
+        return redirect(route('admin.customers.index'));
     }
 
-    public function destroy()
+    public function destroy(Customer $customer)
     {
-
+        $customer->delete();
+        return redirect(route('admin.customers.index'));
     }
 }

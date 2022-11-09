@@ -17,7 +17,7 @@
                 <tbody class="border-b border-gray-300">
                     @foreach($customers as $customer)
                         <tr class="even:bg-gray-200">
-                            <form action="" method="POST">
+                            <form action="{{ route('admin.customers.update', $customer) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -32,13 +32,13 @@
                                     <input type="email" name="email" id="email" value="{{ $customer->email }}" class="w-full">
                                 </td>
                                 <td class="p-1 border-x border-gray-300 first-letter:capitalize">
-                                    <button type="submit" class="border border-1 px-3 py-2 bg-black text-white rounded-md hover:bg-gray-700">Save</button>
+                                    <button type="submit" class="border border-1 px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-900">Save</button>
                             </form>
-                                    <form action="" method="POST" class="inline">
+                                    <form action="{{ route('admin.customers.destroy', $customer) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="border border-1 px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-400">Delete</button>
+                                        <button type="submit" class="border border-1 px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-900">Delete</button>
                                     </form>
                                 </td>
                         </tr>
