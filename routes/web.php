@@ -64,7 +64,8 @@ Route::get('/user/tasks', [UserTaskController::class, 'index'])
 // ADMIN ROUTES - dodać middleware, który sprawdza czy user jest adminem
 
 Route::get('/admin/customers', [Admin\CustomerController::class, 'index'])
-    ->name('admin.customers.index');
+    ->name('admin.customers.index')
+    ->middleware('admin');
 
 Route::get('/admin/customers/create', [Admin\CustomerController::class, 'create'])
     ->name('admin.customers.create');
