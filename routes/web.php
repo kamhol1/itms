@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\Note\NoteController;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\User\TaskController as UserTaskController;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::resource('tasks', TaskController::class);
+// TASKS
 
 Route::get('/', [TaskController::class, 'index'])
     ->name('tasks.index')
@@ -40,6 +40,8 @@ Route::get('/tasks/{task}', [TaskController::class, 'show'])
 
 
 
+// NOTES
+
 Route::post('/notes', [NoteController::class, 'store'])
     ->name('notes.store');
 
@@ -59,13 +61,29 @@ Route::get('/user/tasks', [UserTaskController::class, 'index'])
 
 
 
-Route::get('/admin/customers', [AdminController::class, 'customers'])
-    ->name('admin.customers');
+// ADMIN ROUTES - dodać middleware, który sprawdza czy user jest adminem
 
-Route::get('/admin/categories', [AdminController::class, 'categories'])
+Route::get('/admin/customers', [Admin\CustomerController::class, 'index'])
+    ->name('admin.customers.index');
+
+Route::get('/admin/customers/create', [Admin\CustomerController::class, 'create'])
+    ->name('admin.customers.create');
+
+Route::post('/admin/customers', [Admin\CustomerController::class, 'store'])
+    ->name('admin.customers.store');
+
+Route::put('/admin/customers/{customer}', [Admin\CustomerController::class, 'update'])
+    ->name('admin.customers.update');
+
+Route::put('/admin/customers/{customer}', [Admin\CustomerController::class, 'destroy'])
+    ->name('admin.customers.destroy');
+
+
+
+Route::get('/admin/categories', [Admin\CustomerController::class, 'index'])
     ->name('admin.categories');
 
-Route::get('/admin/users', [AdminController::class, 'users'])
+Route::get('/admin/users', [Admin\CustomerController::class, 'index'])
     ->name('admin.users');
 
 //Route::get('/', function () {

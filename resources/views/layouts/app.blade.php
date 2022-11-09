@@ -18,6 +18,8 @@
         .font-family-karla { font-family: karla; }
         .bg-sidebar { background: #000000; }
         .active-nav-link { background: #3f3f3f; }
+        .bg-button { background: #000000; }
+        .bg-button:hover { background: #4f4f4f; }
         .nav-item:hover { background: #4f4f4f; }
         .button:hover { background: #4f4f4f; }
         .account-link:hover { background: #3a3a3a; }
@@ -33,7 +35,7 @@
             <a href="/"><x-application-logo class="px-1 !text-white" /></a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
-            <a href="{{ route('tasks.index') }}" class="flex items-center text-white opacity-75 py-4 pl-6 nav-item">
+            <a href="{{ route('tasks.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-list mr-3"></i>
                 All Tasks
             </a>
@@ -48,7 +50,7 @@
             @if(auth()->user()->admin == 1)
                 <h1 class=" text-white opacity-75 mt-16 mb-4 flex justify-center">ADMIN OPTIONS</h1>
 
-                <a href="{{ route('admin.customers') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <a href="{{ route('admin.customers.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                     <i class="fas fa-tools mr-3"></i>
                     Customers
                 </a>
