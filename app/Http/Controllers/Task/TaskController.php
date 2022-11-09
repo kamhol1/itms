@@ -121,11 +121,6 @@ class TaskController extends Controller
         ]);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
     public function update(Request $request, Task $task)
     {
         $this->authorize('edit', $task);
