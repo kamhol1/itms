@@ -54,11 +54,11 @@
                     <i class="fas fa-tools mr-3"></i>
                     Customers
                 </a>
-                <a href="{{ route('admin.categories') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <a href="{{ route('admin.categories.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                     <i class="fas fa-tools mr-3"></i>
                     Categories
                 </a>
-                <a href="{{ route('admin.users') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <a href="{{ route('admin.users.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                     <i class="fas fa-tools mr-3"></i>
                     Users
                 </a>

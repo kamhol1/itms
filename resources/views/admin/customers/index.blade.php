@@ -3,7 +3,7 @@
         <h1 class="text-3xl text-black pb-8">Customers (Admin options)</h1>
 
         <div class="bg-white p-4 rounded-sm mb-10">
-            <table class="min-w-full bg-white mb-8">
+            <table class="min-w-full bg-white my-4">
                 <thead class="bg-black text-white">
                 <tr>
                     <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID</th>
@@ -23,22 +23,25 @@
 
                                 <td class="p-1 border-x border-gray-300">{{ $customer->id }}</td>
                                 <td class="p-1 border-x border-gray-300">
-                                    <input type="text" name="name" id="name" value="{{ $customer->name }}" class="w-full">
+                                    <input type="text" name="name" id="name" value="{{ $customer->name }}" class="w-full rounded-sm">
                                 </td>
                                 <td class="p-1 border-x border-gray-300">
-                                    <input type="tel" name="phone" id="phone" value="{{ $customer->phone }}" class="w-full">
+                                    <input type="tel" name="phone" id="phone" value="{{ $customer->phone }}" class="w-full rounded-sm">
                                 </td>
                                 <td class="p-1 border-x border-gray-300">
-                                    <input type="email" name="email" id="email" value="{{ $customer->email }}" class="w-full">
+                                    <input type="email" name="email" id="email" value="{{ $customer->email }}" class="w-full rounded-sm">
                                 </td>
                                 <td class="p-1 border-x border-gray-300 first-letter:capitalize">
-                                    <button type="submit" class="border border-1 px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-900">Save</button>
+                                    <button type="submit" class="border border-1 px-3 py-1 bg-green-600 text-white rounded-sm hover:bg-green-900">Save</button>
                             </form>
                                     <form action="{{ route('admin.customers.destroy', $customer) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="border border-1 px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-900">Delete</button>
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this customer: {{ $customer->name }}');"
+                                            class="border border-1 px-3 py-1 bg-red-600 text-white rounded-sm hover:bg-red-900">
+                                            Delete
+                                        </button>
                                     </form>
                                 </td>
                         </tr>

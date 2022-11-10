@@ -155,7 +155,7 @@
                     @foreach($notes as $note)
                         <tr class="even:bg-gray-200 hover:bg-gray-300 clickable-row hover:cursor-pointer" onclick="window.location.href='{{ route('notes.show', $note->id) }}'">
                             <td class="p-1 border-l border-gray-300 whitespace-pre-wrap break-all">{{ preg_replace("/(\r?\n){2,}/", "\n", $note->content) }}</td>
-                            <td class="p-1 border-x border-gray-300">{{ $note->user->name }}</td>
+                            <td class="p-1 border-x border-gray-300">{{ $note->user->name ?? '' }}</td>
                             <td class="p-1 border-x border-gray-300">{{ date("H:i:s d-m-Y", strtotime($note->created_at)) }}</td>
 
                         </tr>

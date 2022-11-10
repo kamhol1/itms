@@ -12,7 +12,7 @@ class NotePolicy
 
     public function edit(User $user, Note $note)
     {
-        if ($note->user->id != $user->id && $note->user->id != null && !$user->isAdmin())
+        if (!$user->isAdmin() && $note->user_id != $user->id)
             return false;
         else
             return true;
@@ -20,7 +20,7 @@ class NotePolicy
 
     public function delete(User $user, Note $note)
     {
-        if (!$user->isAdmin() && $note->user->id != $user->id)
+        if (!$user->isAdmin() && $note->user_id != $user->id)
             return false;
         else
             return true;

@@ -69,34 +69,10 @@ Route::group([
     'as' => 'admin.'
 ], function () {
     Route::resource('customers', Admin\CustomerController::class);
-    Route::resource('categories', Admin\CustomerController::class);
-    Route::resource('users', Admin\CustomerController::class)->only([
-        'index', 'update', 'destroy'
+    Route::resource('categories', Admin\CategoryController::class);
+    Route::resource('users', Admin\UserController::class)->only([
+        'index', 'create', 'store', 'update', 'destroy'
     ]);
-//    Route::get('', [Admin\CustomerController::class, 'index'])
-//        ->name('index');
-//
-//    Route::get('create', [Admin\CustomerController::class, 'create'])
-//        ->name('create');
-//
-//    Route::post('', [Admin\CustomerController::class, 'store'])
-//        ->name('store');
-//
-//    Route::put('{customer}', [Admin\CustomerController::class, 'update'])
-//        ->name('update');
-//
-//    Route::put('{customer}', [Admin\CustomerController::class, 'destroy'])
-//        ->name('destroy');
 });
-
-
-
-Route::get('/admin/categories', [Admin\CustomerController::class, 'index'])
-    ->name('admin.categories');
-
-Route::get('/admin/users', [Admin\CustomerController::class, 'index'])
-    ->name('admin.users');
-
-
 
 require __DIR__.'/auth.php';
