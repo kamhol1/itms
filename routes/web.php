@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Note\NoteController;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\User\TaskController as UserTaskController;
@@ -17,62 +19,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TASKS
-
-Route::get('/', [TaskController::class, 'index'])
-    ->name('tasks.index')
-    ->middleware(['auth', 'verified']);
-
-Route::get('/tasks/create', [TaskController::class, 'create'])
-    ->name('tasks.create');
-
-Route::post('/tasks', [TaskController::class, 'store'])
-    ->name('tasks.store');
-
-Route::put('/tasks/{task}/edit', [TaskController::class, 'update'])
-    ->name('tasks.update');
-
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
-    ->name('tasks.destroy');
-
-Route::get('/tasks/{task}', [TaskController::class, 'show'])
-    ->name('tasks.show');
-
-
-
-// NOTES
-
-Route::post('/notes', [NoteController::class, 'store'])
-    ->name('notes.store');
-
-Route::put('/notes/{note}/edit', [NoteController::class, 'update'])
-    ->name('notes.update');
-
-Route::delete('/notes/{note}', [NoteController::class, 'destroy'])
-    ->name('notes.destroy');
-
-Route::get('/notes/{note}', [NoteController::class, 'show'])
-    ->name('notes.show');
-
-
-
-Route::get('/user/tasks', [UserTaskController::class, 'index'])
-    ->name('user.tasks.index');
-
-
-
-// ADMIN ROUTES - dodać middleware, który sprawdza czy user jest adminem
 
 Route::group([
-    'middleware' => 'admin',
-    'prefix' => '/admin',
-    'as' => 'admin.'
+    'middleware' => [
+        'auth',
+        'verified'
+    ]
 ], function () {
-    Route::resource('customers', Admin\CustomerController::class);
-    Route::resource('categories', Admin\CategoryController::class);
-    Route::resource('users', Admin\UserController::class)->only([
-        'index', 'create', 'store', 'update', 'destroy'
-    ]);
+    // TASKS
+    Route::get('/', [TaskController::class, 'index'])
+        ->name('tasks.index');
+    Route::resource('/tasks', TaskController::class)
+        ->only(['show', 'create', 'store', 'update', 'destroy']);
+
+
+    // USER TASKS
+    Route::get('/user/tasks', [UserTaskController::class, 'index'])
+        ->name('user.tasks.index');
+
+
+    // NOTES
+    Route::resource('/notes', NoteController::class)
+        ->only(['show', 'store', 'update', 'destroy']);
+
+
+    // ADMIN OPTIONS
+    Route::group([
+        'middleware' => [
+            'admin'
+        ],
+        'prefix' => '/admin',
+        'as' => 'admin.',
+    ], function () {
+        Route::resource('customers', CustomerController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::resource('users', UserController::class);
+    });
 });
+
 
 require __DIR__.'/auth.php';
