@@ -11,13 +11,16 @@
                 @endif
             </div>
 
-            <form action="{{ route('user.show') }}" method="POST">
+            <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="mb-6">
                     <label for="name">Choose your avatar:</label><br/>
-                    <input type="file" class="mt-1">
+                    <input type="file" accept="image/png, image/jpeg" name="avatar" id="avatar" class="mt-1">
+                    @error('avatar')
+                        <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
@@ -38,19 +41,22 @@
                 <div class="mb-6">
                     <label for="old_password">Old password:</label><br/>
                     <input type="password" name="old_password" size="50" id="old_password" class="p-1">
+                    @error('old_password')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <label for="new_password">New password:</label><br/>
                     <input type="password" name="new_password" size="50" id="new_password" class="p-1">
+                    @error('new_password')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <label for="new_password-confirmation">Confirm new password:</label><br/>
-                    <input type="password" name="new_password-confirmation" size="50" id="new_password-confirmation" class="p-1">
-                    @error('new_password')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                    @enderror
+                    <input type="password" name="new_password_confirmation" size="50" id="new_password_confirmation" class="p-1">
                 </div>
 
                 <div class="flex items-center">

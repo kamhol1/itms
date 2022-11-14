@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Note\NoteController;
 use App\Http\Controllers\Task\TaskController;
-use App\Http\Controllers\User\UserController as UserProfileController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\TaskController as UserTaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +59,10 @@ Route::group([
 
 
     // USER PROFILE
-    Route::get('user/show', [UserProfileController::class, 'show'])
+    Route::put('user', [UserController::class, 'update'])
+        ->name('user.update');
+
+    Route::get('user', [UserController::class, 'show'])
         ->name('user.show');
 });
 

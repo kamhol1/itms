@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -26,13 +27,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            'name' => ['required', 'min:5', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
-            'password' => ['required', 'min:5'],
+            'password' => 'required',
             'admin' => 'nullable'
         ]);
 
-        $formFields['password'] = bcrypt($formFields['password']);
+        $formFields['password'] = Hash::make($formFields['password']);
         $formFields['admin'] = isset($formFields['admin']) && $formFields['admin'];
 
         User::create($formFields);
