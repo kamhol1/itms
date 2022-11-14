@@ -15,7 +15,8 @@
                 </div>
 
                 @can('edit', $note)
-                    <button type="submit" class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                    <button type="submit" class="mt-4 bg-button text-white rounded-md p-3 inline-block">
+                        <i class="fas fa-check mr-3"></i>
                         Save
                     </button>
                 @endcan
@@ -27,15 +28,16 @@
                     @method('DELETE')
 
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this Note?');"
-                        class="mt-4 px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        class="mt-4 bg-red-600 hover:bg-red-900 text-white rounded-md p-3 inline-block">
+                        <i class="fas fa-trash mr-3"></i>
                         Delete Note
                     </button>
                 </form>
             @endcan
 
             <a href="{{ route('tasks.show', $note->task->id) }}">
-                <button type="button" class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                    <i class="fas fa-chevron-left"></i>
+                <button type="button" class="mt-4 bg-button text-white rounded-md p-3 inline-block">
+                    <i class="fas fa-chevron-left mr-3"></i>
                     Go back
                 </button>
             </a>

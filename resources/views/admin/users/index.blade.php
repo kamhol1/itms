@@ -3,15 +3,15 @@
         <h1 class="text-3xl text-black pb-8">Users (Admin options)</h1>
 
         <div class="bg-white p-4 rounded-sm mb-10">
-            <table class="min-w-full bg-white my-4">
+            <table class="w-full bg-white my-4 table-auto">
                 <thead class="bg-black text-white">
                 <tr>
-                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID</th>
-                    <th class="w-3/12 py-3 px-4 uppercase font-semibold text-sm">Username</th>
-                    <th class="w-3/12 py-3 px-4 uppercase font-semibold text-sm">Email</th>
-                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Email verified at</th>
-                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Is admin</th>
-                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Options</th>
+                    <th class="w-[10%] py-3 px-4 uppercase font-semibold text-sm">ID</th>
+                    <th class="py-3 px-4 uppercase font-semibold text-sm">Username</th>
+                    <th class="py-3 px-4 uppercase font-semibold text-sm">Email</th>
+                    <th class="py-3 px-4 uppercase font-semibold text-sm">Email verified at</th>
+                    <th class="py-3 px-4 uppercase font-semibold text-sm">Is admin</th>
+                    <th class="w-[15%] py-3 px-4 uppercase font-semibold text-sm">Options</th>
                 </tr>
                 </thead>
 
@@ -33,18 +33,18 @@
                             <td class="p-1 border-x border-gray-300 text-center">
                                 <input type="checkbox" name="admin" id="admin" @if($user->admin == 1) checked @endif>
                             </td>
-                            <td class="p-1 border-x border-gray-300 first-letter:capitalize">
+                            <td class="p-1 border-x border-gray-300 first-letter:capitalize text-center">
                                 <button type="submit" class="border border-1 px-3 py-1 bg-green-600 text-white rounded-sm hover:bg-green-900">Save</button>
                         </form>
-                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
+                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
 
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this user: {{ $user->name }}');"
-                                    class="border border-1 px-3 py-1 bg-red-600 text-white rounded-sm hover:bg-red-900">
-                                Delete
-                            </button>
-                        </form>
+                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this user: {{ $user->name }}');"
+                                            class="border border-1 px-3 py-1 bg-red-600 text-white rounded-sm hover:bg-red-900">
+                                        Delete
+                                    </button>
+                                </form>
                         </td>
                     </tr>
                 @endforeach

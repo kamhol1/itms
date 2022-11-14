@@ -21,7 +21,7 @@
 
                 <div class="mb-6">
                     <label for="category_id">Category:</label><br/>
-                    <select name="category_id" id="category_id" required class="py-1">
+                    <select name="category_id" id="category_id" required class="py-1 w-full">
                         <option hidden selected value>-</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -34,7 +34,7 @@
 
                 <div class="mb-6">
                     <label for="customer_id">Customer:</label><br/>
-                    <select name="customer_id" id="customer_id" class="py-1">
+                    <select name="customer_id" id="customer_id" class="py-1 w-full">
                         <option selected value>-</option>
                         @foreach($customers as $customer)
                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -44,7 +44,7 @@
 
                 <div class="mb-6">
                     <label for="priority">Priority:</label><br/>
-                    <select name="priority" id="priority" required class="py-1">
+                    <select name="priority" id="priority" required class="py-1 w-full">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
@@ -53,7 +53,7 @@
 
                 <div class="mb-6">
                     <label for="assignee_id">Assignee:</label><br/>
-                    <select name="assignee_id" id="assignee_id" class="py-1">
+                    <select name="assignee_id" id="assignee_id" class="py-1 w-full">
                         <option selected value>-</option>
                         @foreach($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -63,14 +63,15 @@
 
                 <div class="mb-6">
                     <label for="due_date">Due date:</label><br/>
-                    <input type="date" name="due_date" id="due_date" class="p-1" value="{{ old('due_date') }}">
+                    <input type="date" name="due_date" id="due_date" class="p-1 w-full" value="{{ old('due_date') }}">
                     @error('due_date')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="flex items-center">
-                    <button type="submit" class="m-auto mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                    <button type="submit" class="m-auto mt-4 bg-button text-white rounded-md p-3 inline-block">
+                        <i class="fas fa-edit mr-3"></i>
                         Create Task
                     </button>
                 </div>

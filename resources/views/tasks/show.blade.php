@@ -1,18 +1,17 @@
 <x-app-layout>
-    <div>
-        <div class="bg-white p-12 rounded-sm">
+        <div class="bg-white p-12 rounded-sm min-w-[300px] w-[40%]">
             <form action="{{ route('tasks.update', $task->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="mb-6">
                     <label for="id">Task ID:</label><br/>
-                    <input type="text" name="id" size="30" id="id" disabled value="{{ $task->id }}" class="p-1">
+                    <input type="text" name="id" id="id" disabled value="{{ $task->id }}" class="p-1 w-full">
                 </div>
 
                 <div class="mb-6">
                     <label for="title">Title:</label><br/>
-                    <input type="text" name="title" size="30" id="title" value="{{ $task->title }}" class="p-1">
+                    <input type="text" name="title" size="30" id="title" value="{{ $task->title }}" class="p-1 w-full">
                     @error('title')
                     <span class="text-sm text-red-500 inline-block">{{ $message }}</span>
                     @enderror
@@ -20,7 +19,7 @@
 
                 <div class="mb-6">
                     <label for="description">Description:</label><br/>
-                    <textarea name="description" id="description" class="p-1" cols="30" rows="4">{{ $task->description }}</textarea>
+                    <textarea name="description" id="description" class="p-1 w-full" rows="4">{{ $task->description }}</textarea>
                     @error('description')
                     <span class="text-sm text-red-500 inline-block">{{ $message }}</span>
                     @enderror
@@ -118,7 +117,8 @@
                 </div>
 
                 <button type="submit" @cannot('edit', $task) disabled @endcannot
-                    class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                    class="mt-4 bg-button text-white rounded-md p-3 inline-block">
+                    <i class="fas fa-check mr-3"></i>
                     Save
                 </button>
             </form>
@@ -129,13 +129,13 @@
                     @method('DELETE')
 
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this Task?');"
-                        class="mt-4 px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        class="mt-4 bg-red-600 hover:bg-red-900 text-white rounded-md p-3 inline-block">
+                        <i class="fas fa-trash mr-3"></i>
                         Delete Task
                     </button>
                 </form>
             @endcan
         </div>
-    </div>
 
     <div class="content-center w-full p-12 rounded-sm flex flex-col max-h-[1000px]">
         <h1 class="text-2xl pb-4">Notes:</h1>
@@ -179,7 +179,8 @@
                 <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
                 <textarea class="w-full rounded-sm" name="content" id="content" rows="3"></textarea>
 
-                <button type="submit" class="mt-6 px-4 py-2 bg-black border border-transparent rounded-md font-semibold text-white uppercase tracking-widest button active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                <button type="submit" class="mt-4 bg-button text-white rounded-md p-3 inline-block">
+                    <i class="fas fa-add mr-3"></i>
                     Add
                 </button>
             </form>
