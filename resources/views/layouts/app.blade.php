@@ -26,13 +26,12 @@
     </style>
 </head>
 
-
-
 <body class="bg-gray-100 font-family-karla flex">
-
     <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="/"><x-application-logo class="px-1 !text-white" /></a>
+            <a href="{{ route('tasks.index') }}">
+                <x-application-logo class="px-1 !text-white" />
+            </a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
             <a href="{{ route('tasks.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
@@ -63,22 +62,6 @@
                     Users
                 </a>
             @endif
-{{--            <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
-{{--                <i class="fas fa-table mr-3"></i>--}}
-{{--                Tables--}}
-{{--            </a>--}}
-{{--            <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
-{{--                <i class="fas fa-align-left mr-3"></i>--}}
-{{--                Forms--}}
-{{--            </a>--}}
-{{--            <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
-{{--                <i class="fas fa-tablet-alt mr-3"></i>--}}
-{{--                Tabbed Content--}}
-{{--            </a>--}}
-{{--            <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">--}}
-{{--                <i class="fas fa-calendar mr-3"></i>--}}
-{{--                Calendar--}}
-{{--            </a>--}}
         </nav>
     </aside>
 
@@ -90,11 +73,15 @@
             <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
                 <p class="my-auto mx-2">{{ auth()->user()->name }}</p>
                 <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-2 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
-                    <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+                    @if(auth()->user()->avatar)
+                        <img src="{{ asset('storage/' . $user->avatar) }}">
+                    @else
+                        <img src="/images/default_avatar.png" alt="Avatar">
+                    @endif
                 </button>
                 <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">My Account</a>
+                    <a href="{{ route('user.show') }}" class="block px-4 py-2 account-link hover:text-white">My Account</a>
                     <a href="" class="block px-4 py-2 account-link hover:text-white" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Logout</a>
 
@@ -117,34 +104,34 @@
 
             <!-- Dropdown Nav -->
             <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
-                <a href="{{ route('tasks.index') }}" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
-                    <i class="fas fa-tachometer-alt mr-3"></i>
-                    Tasks
+                <a href="{{ route('tasks.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-list mr-3"></i>
+                    All Tasks
                 </a>
-                <a href="{{ route('tasks.create') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-sticky-note mr-3"></i>
+                <a href="{{ route('user.tasks.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-chalkboard-user mr-3"></i>
+                    My Tasks
+                </a>
+                <a href="{{ route('tasks.create') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-plus mr-3"></i>
                     New Task
                 </a>
-                <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-table mr-3"></i>
-                    Tables
-                </a>
-                <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-align-left mr-3"></i>
-                    Forms
-                </a>
-                <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-tablet-alt mr-3"></i>
-                    Tabbed Content
-                </a>
-                <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-calendar mr-3"></i>
-                    Calendar
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-user mr-3"></i>
-                    My Account
-                </a>
+                @if(auth()->user()->admin == 1)
+                    <h1 class=" text-white opacity-75 mt-16 mb-4 flex justify-center">ADMIN OPTIONS</h1>
+
+                    <a href="{{ route('admin.customers.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-tools mr-3"></i>
+                        Customers
+                    </a>
+                    <a href="{{ route('admin.categories.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-tools mr-3"></i>
+                        Categories
+                    </a>
+                    <a href="{{ route('admin.users.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-tools mr-3"></i>
+                        Users
+                    </a>
+                @endif
                 <a href="" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt mr-3"></i>
@@ -159,9 +146,5 @@
             </main>
         </div>
     </div>
-
-
 </body>
-
-
 </html>
