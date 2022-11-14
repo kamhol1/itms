@@ -33,7 +33,7 @@ Route::group([
         ->only(['show', 'create', 'store', 'update', 'destroy']);
 
 
-    // USER TASKS
+    // USER TASKS LIST
     Route::get('/user/tasks', [UserTaskController::class, 'index'])
         ->name('user.tasks.index');
 
