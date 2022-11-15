@@ -72,9 +72,9 @@
             </div>
             <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
                 <p class="my-auto mx-2">{{ auth()->user()->name }}</p>
-                <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-2 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                <button @click="isOpen = !isOpen" class="relative z-10 w-12 h-12 rounded-full overflow-hidden border-2 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
                     @if(auth()->user()->avatar)
-                        <img src="{{ asset('storage/' . $user->avatar) }}">
+                        <img src="{{ asset('storage/' . auth()->user()->avatar) }}">
                     @else
                         <img src="/images/default_avatar.png" alt="Avatar">
                     @endif

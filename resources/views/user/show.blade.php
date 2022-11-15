@@ -5,9 +5,9 @@
         <div class="content-center bg-white w-min p-12 m-auto rounded-sm">
             <div class="mb-8 mt-2">
                 @if($user->avatar)
-                    <img src="{{ asset('storage/' . $user->avatar) }}" class="m-auto w-2/3 rounded-full">
+                    <img src="{{ asset('storage/' . $user->avatar) }}" class="m-auto w-2/3 border-4 border-gray-300">
                 @else
-                    <img src="/images/default_avatar.png" alt="Avatar" class="m-auto w-2/3 rounded-full">
+                    <img src="/images/default_avatar.png" alt="Avatar" class="m-auto w-2/3 border-4 border-gray-300">
                 @endif
             </div>
 

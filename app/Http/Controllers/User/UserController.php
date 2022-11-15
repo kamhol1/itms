@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 
 class UserController extends Controller
@@ -21,9 +22,11 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        $user = auth()->user();
+
         $formFields = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'avatar' => 'nullable'
+            'avatar' => ['nullable', 'file', 'image']
         ]);
 
         if (isset($request->old_password) || isset($request->new_password)) {
@@ -39,7 +42,17 @@ class UserController extends Controller
             $formFields['password'] = Hash::make($request->new_password);
         }
 
-        auth()->user()->update($formFields);
+        if (isset($request->avatar)) {
+            $path = $formFields['avatar']->store('avatars', 'public');
+
+            if ($path) {
+                if ($user->avatar)
+                    Storage::disk('public')->delete($user->avatar);
+                $formFields['avatar'] = $path;
+            }
+        }
+
+        $user->update($formFields);
 
         return redirect(route('user.show'));
     }
